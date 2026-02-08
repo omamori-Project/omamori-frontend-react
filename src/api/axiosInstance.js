@@ -27,20 +27,22 @@ axiosIns.interceptors.request.use(
         return config;
     },
     
-    // 요청에 실패할 경우
-    (error) => {
-        if() {
-
-        }
-        else if() {
-
-        }
-    }
+    // 요청에 실패할 경우, 계속 error 객체 반환
+    (error) => { return Promise.reject(error); }
 );
 
 // 응답 형식
 axiosIns.interceptors.response.use(
+    // 응답에 성공할 경우
+    (response) => {
+        return response;
+    },
 
+    // 응답에 실패한 경우
+    (error) => {
+        // 실패 시 응답 로직은 추후 추가
+        return Promise.reject(error);
+    }
 );
 
-export api 
+export default axiosIns; 
