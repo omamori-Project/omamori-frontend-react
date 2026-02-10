@@ -1,0 +1,1 @@
+// omamori.api.js
