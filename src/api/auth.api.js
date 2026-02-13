@@ -41,6 +41,28 @@ export const deleteMyPage = async(password) => {
 export const googleAuth = async() => {
     const response = await axiosIns.get('/auth/google');
     return response.data;
-}
+};
 
-// 
+// (google OAuth) 콜백
+export const googleCallBack = async(authorizationCode, state) => {
+    await axiosIns.get(`/auth/google/callback?code=${authorizationCode}&state=${state}`);
+    return true;
+};
+
+// 기존 게정에 Google 연결
+export const googleLink = async(data) => {
+    await axiosIns.post('/auth/google/link', data);
+    return true;
+};
+
+// google 연결 해제
+export const googleUnlink = async() => {
+    await axiosIns.delete('/auth/google/unlink');
+    return true;
+};
+
+// 내 연결된 로그인 수단 목록
+export const loginLIst = async() => {
+    await axiosIns.get('/me/identities');
+    return true;
+};
