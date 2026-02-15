@@ -40,9 +40,28 @@ axiosIns.interceptors.response.use(
 
     // 응답에 실패한 경우
     (error) => {
-        // 실패 시 응답 로직은 추후 추가
+        // 네트워크 오류
+        if (!error.response) {
+            error.customMessage = "서버에 연결할 수 없습니다.";
+            return Promise.reject(error);
+        }
+        // 401 (인증 만료 / 토큰 없음)
+        else if (error.response.status === 401) {
+            localStorage.removeItem("accessToken");
+            window.location.href = "/auth/login";
+        }
+        // 403 (권한 없음)
+        else if (error.response.status === 403) {
+            error.customMessage = "권한이 없습니다.";
+        }
+        // 500 (서버 오류)
+        else if (error.response.status === 500) {
+            error.customMessage = "서버에 연결할 수 없습니다.";
+        }
+        // error 반환
         return Promise.reject(error);
     }
+    
 );
 
 export default axiosIns; 
