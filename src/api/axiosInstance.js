@@ -42,7 +42,7 @@ axiosIns.interceptors.response.use(
     (error) => {
         // 네트워크 오류
         if (!error.response) {
-            error.customMessage = "NETWORK_ERROR";
+            error.customMessage = "서버에 연결할 수 없습니다.";
             return Promise.reject(error);
         }
         // 401 (인증 만료 / 토큰 없음)
@@ -52,11 +52,11 @@ axiosIns.interceptors.response.use(
         }
         // 403 (권한 없음)
         else if (error.response.status === 403) {
-            error.customMessage = "FORBIDDEN";
+            error.customMessage = "권한이 없습니다.";
         }
         // 500 (서버 오류)
         else if (error.response.status === 500) {
-            error.customMessage = "SERVER_ERROR";
+            error.customMessage = "서버에 연결할 수 없습니다.";
         }
         // error 반환
         return Promise.reject(error);
