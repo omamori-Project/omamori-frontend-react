@@ -2,7 +2,7 @@
 
 import { useModal } from "../hooks/useModal";
 import RegisterModal from "./RegisterModal";
-// import LoginModal from "./LoginModal";
+import LoginModal from "./LoginModal";
 
 // 모달 상태 관리
 function GlobalModal() {
