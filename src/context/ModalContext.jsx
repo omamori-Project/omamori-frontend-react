@@ -18,7 +18,7 @@ export function ModalProvider({ children }) {
     // 반환
     return (
     <ModalContext.Provider value={{ modal, openModal, closeModal }}>
-        {children}
+      {children}
     </ModalContext.Provider>
   );
 }

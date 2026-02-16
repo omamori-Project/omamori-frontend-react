@@ -1,6 +1,11 @@
 // src/pages/auth/Main.jsx
 
+import { useModal } from "../components/hooks/useModal";
+
 function Main() {
+  // Modal 상태 변경함수
+  const { openModal } = useModal();
+
   return (
     <div>
       {/* Hero Section */}
@@ -10,8 +15,8 @@ function Main() {
 
         <div>
           <button>오마모리 만들기</button>
-          <button>회원가입</button>
-          <button>로그인</button>
+          <button onClick={() => openModal("signup")}>회원가입</button>
+          <button onClick={() => openModal("login")}>로그인</button>
         </div>
       </section>
 
