@@ -32,9 +32,8 @@ export const editMyPage = async(editData) => {
 };
 
 // 회원 탈퇴
-export const deleteMyPage = async(password) => {
-    await axiosIns.delete('/me', password);
-    return true;
+export const deleteUser = async(password) => {
+    return await axiosIns.delete('/me', {data: { password: password } });
 };
 
 // (google OAuth) 시작
