@@ -81,7 +81,6 @@ export default function AuthModal({ openModal }) {
         try {
             const result = await auth(formData);
             openModal("login");
-            console.log("성공인 것!! 홀리 쒯!");
         } catch (error) {
             setErrors((prev) => ({
                 ...prev,
