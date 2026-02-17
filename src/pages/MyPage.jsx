@@ -1,21 +1,49 @@
 // pages/MyPage.jsx
 import { useAuth } from "../context/AuthContext";
+import { useState } from "react";
 import { Link } from "react-router-dom";
+import { deleteUser } from "../api/auth.api";
+import PasswordConfirm from "../components/auth/PasswordConfirm";
+import { Navigate } from "react-router-dom";
 
 export default function MyPage() {
+    const [step, setStep] = useState("default");
     const { user, logout } = useAuth();
+    const navigate = Navigate
 
     // 로그아웃 핸들러
     const handleLogout = () => {
         logout();
-        navigate("/"); // 로그아웃 시 메인으로 이동
+        navigate("/"); 
     };
 
     // 회원탈퇴 핸들러
     const handleDeleteAccount = async () => {
         const confirmDelete = window.confirm("정말 탈퇴하시겠습니까?");
+
         if (!confirmDelete) return;
+
+        setStep("confirm");
     };
+
+    // 서버에 회원탈퇴 전달
+    const handleDelete = async(password) => {
+        try {
+            await deleteUser(password);
+            alert("탈퇴되었습니다.");
+            logout();
+            navigate("/");
+        } catch (error) {
+            alert("비밀번호가 틀렸습니다.");
+        }
+    }
+
+    // 만일 confirm일 경우, 회원탈퇴 컴포넌트로.
+    if (step === "confirm") {
+        return (
+            <PasswordConfirm onCancel={() => setStep("default")} onSubmit={handleDelete} />
+        );
+    }
 
     return (
         <div>
