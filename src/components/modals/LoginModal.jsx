@@ -1,8 +1,14 @@
 // components/modals/LoginModal.jsx
 import { useState } from "react";
-import { login } from "../../api/auth.api";
+import { login as loginApi } from "../../api/auth.api";
+import { useNavigate } from "react-router-dom";
+import { useAuth } from "../../context/AuthContext";
 
 export default function LoginModal({ onClose }) {
+
+    const { login } = useAuth();
+    const navigate = useNavigate();
+
     // 이메일, 비밀번호, 검증 비밀번호, 이름 상태 관리
     const [formData, setFormData] = useState({
         email: "",
@@ -54,9 +60,14 @@ export default function LoginModal({ onClose }) {
 
         // 서버 전송
         try {
-            const result = await login(formData);
-            console.log("성공인 것!! 홀리 쒯!");
+            const response = await loginApi(formData);
+            const { user, token } = response.data;
+            login(user, token);
+                        
             onClose();
+
+            // 마이페이지 이동
+            navigate("/mypage");
         } catch (error) {
             setErrors((prev) => ({
                 ...prev,
