@@ -1,4 +1,4 @@
-// src/pages/auth/Main.jsx
+// src/pages/Main.jsx
 
 import { useModal } from "../components/hooks/useModal";
 
