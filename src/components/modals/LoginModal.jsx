@@ -1,12 +1,13 @@
 // components/modals/LoginModal.jsx
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { login as loginApi } from "../../api/auth.api";
+import { googleAuth } from "../../api/auth.api";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../../context/AuthContext";
 
 export default function LoginModal({ onClose }) {
 
-    const { login } = useAuth();
+    const { login, isLoggedIn } = useAuth();
     const navigate = useNavigate();
 
     // 이메일, 비밀번호, 검증 비밀번호, 이름 상태 관리
@@ -21,6 +22,13 @@ export default function LoginModal({ onClose }) {
         password : "",
         responseError : ""
     });
+
+    // 로그인 된 상태인 경우, mypage로 바로 이동
+    useEffect(() => {
+        if (isLoggedIn == true) {
+            navigate("/mypage");
+        }
+    })
 
     // 수정 이벤트 처리
     const handleChange = (e) => {
@@ -77,6 +85,16 @@ export default function LoginModal({ onClose }) {
         }
     };
 
+    // 구글 오어스 요청
+    const handleGoogleLogin = async () => {
+        try {
+            const response = await googleAuth();
+            window.location.href = response.data.redirect_url;
+        } catch (error) {
+            alert("구글 로그인에 실패했습니다.");
+        }
+    };
+
     // 화면 그리기
     return (
         <div className="modal">
@@ -102,6 +120,12 @@ export default function LoginModal({ onClose }) {
                 <button type="submit">로그인</button>
 
                 {errors.responseError && <p>{errors.responseError}</p>}
+
+                <hr/>
+
+                <button type="button" onClick={handleGoogleLogin}>
+                Google로 계속하기
+                </button>   
             </form>
         </div>
     );
