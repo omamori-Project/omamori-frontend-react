@@ -1,15 +1,19 @@
 // pages/MyPage.jsx
 import { useAuth } from "../context/AuthContext";
 import { useState } from "react";
-import { Link } from "react-router-dom";
+import { useModal } from "../components/hooks/useModal";
 import { deleteUser } from "../api/auth.api";
 import PasswordConfirm from "../components/auth/PasswordConfirm";
-import { Navigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 export default function MyPage() {
+    // 탭 상태 관리 ("omamori" | "posts" | "bookmarks")
+    const [activeTab, setActiveTab] = useState("omamori");
+
     const [step, setStep] = useState("default");
     const { user, logout } = useAuth();
-    const navigate = Navigate
+    const navigate = useNavigate();
+    const { openModal } = useModal();
 
     // 로그아웃 핸들러
     const handleLogout = () => {
@@ -50,8 +54,9 @@ export default function MyPage() {
 
             {/* 상단 유저 정보 영역 */}
             <header>
-                <h1>{user?.name} 님</h1>
-                <Link to="/mypage/edit">회원정보 수정</Link>
+                <h1>{user?.name} 님</h1> 
+                <button onClick={() => openModal("profileEdit")}>프로필 수정</button>
+                <button onClick={() => openModal("socialLink")}>계정 연동 관리</button>
                 <button onClick={handleLogout}>로그아웃</button>
                 <button onClick={handleDeleteAccount}>회원탈퇴</button>
             </header>
@@ -60,25 +65,15 @@ export default function MyPage() {
 
             {/* 메뉴 영역 */}
             <nav>
-                <ul>
-                    <li>
-                        <Link to="/my-omamori">
-                            내 오마모리
-                        </Link>
-                    </li>
-
-                    <li>
-                        <Link to="/my-posts">
-                            오마모리 게시글
-                        </Link>
-                    </li>
-
-                    <li>
-                        <Link to="/bookmarks">
-                            북마크 게시글
-                        </Link>
-                    </li>
-                </ul>
+                <button onClick={() => setActiveTab("omamori")}>
+                    {activeTab === "omamori" ? "★ 내 오마모리" : "내 오마모리"}
+                </button>
+                <button onClick={() => setActiveTab("posts")}>
+                    {activeTab === "posts" ? "★ 작성 글" : "작성 글"}
+                </button>
+                <button onClick={() => setActiveTab("bookmarks")}>
+                    {activeTab === "bookmarks" ? "★ 북마크" : "북마크"}
+                </button>
             </nav>
 
             <hr />

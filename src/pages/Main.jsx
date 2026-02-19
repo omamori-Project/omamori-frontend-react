@@ -1,10 +1,21 @@
 // src/pages/Main.jsx
 
 import { useModal } from "../components/hooks/useModal";
+import { useAuth } from "../context/AuthContext";
+import { useNavigate } from "react-router-dom";
 
 function Main() {
+  const navigate = useNavigate();
   // Modal 상태 변경함수
   const { openModal } = useModal();
+
+  const { isLoggedIn, user, logout } = useAuth();
+
+  const handleLogout = () => {
+    if (window.confirm("로그아웃 하시겠습니까?")) {
+      logout();
+    }
+  };
 
   return (
     <div>
@@ -15,8 +26,18 @@ function Main() {
 
         <div>
           <button>오마모리 만들기</button>
-          <button onClick={() => openModal("signup")}>회원가입</button>
-          <button onClick={() => openModal("login")}>로그인</button>
+          {isLoggedIn ? (
+          <>
+            <p>{user?.name}님, 환영합니다!</p>
+            <button onClick={() => navigate("/mypage")}>마이페이지</button>
+            <button onClick={handleLogout}>로그아웃</button>
+          </>
+          ) : (
+          <>
+            <button onClick={() => openModal("signup")}>회원가입</button>
+            <button onClick={() => openModal("login")}>로그인</button>
+          </>
+          )}
         </div>
       </section>
 
