@@ -20,10 +20,13 @@ export const logout = async() => {
 };
 
 // 내 정보 조회
-export const myPage = async() => {
-    const response = await axiosIns.get('/me');
+export const myPage = async(token) => {
+    const response = await axiosIns.get("/me", {
+        headers: {
+            Authorization: `Bearer ${token}`
+        }});
     return response.data;
-};
+}
 
 // 내 정보 수정
 export const editMyPage = async(editData) => {
@@ -43,9 +46,9 @@ export const googleAuth = async() => {
 };
 
 // (google OAuth) 콜백
-export const googleCallBack = async(authorizationCode, state) => {
-    await axiosIns.get(`/auth/google/callback?code=${authorizationCode}&state=${state}`);
-    return true;
+export const googleCallBack = async(authorizationCode) => {
+    const response = await axiosIns.get(`/auth/google/callback?code=${authorizationCode}`);
+    return response.data;
 };
 
 // 기존 게정에 Google 연결
@@ -62,6 +65,6 @@ export const googleUnlink = async() => {
 
 // 내 연결된 로그인 수단 목록
 export const loginLIst = async() => {
-    await axiosIns.get('/me/identities');
-    return true;
+    const response = await axiosIns.get('/me/identities');
+    return response.data;
 };

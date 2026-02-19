@@ -23,13 +23,13 @@ export function AuthProvider({ children }) {
             // 토큰으로 유저 정보 요청
             try {
                 // 유저 정보 요청 후 객체로 저장
-                const userData = await myPage();
+                const userData = await myPage(token);
                 setUser({
-                    id : userData.id,
-                    email : userData.email,
-                    name : userData.name,
-                    role : userData.role,
-                    is_active : userData.is_active
+                    id : userData.data.id,
+                    email : userData.data.email,
+                    name : userData.data.name,
+                    role : userData.data.role,
+                    is_active : userData.data.is_active
                 });
             } catch (error) {
                 localStorage.removeItem("accessToken");
