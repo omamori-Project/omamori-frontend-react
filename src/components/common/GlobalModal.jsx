@@ -1,8 +1,10 @@
 // components/modals/GlobalModal.jsx
 
 import { useModal } from "../hooks/useModal";
-import RegisterModal from "./RegisterModal";
-import LoginModal from "./LoginModal";
+import RegisterModal from "../modals/RegisterModal";
+import LoginModal from "../modals/LoginModal";
+import ProfileEditModal from "../modals/ProfileEditModal";
+import SocialLinkModal from "../modals/SocialLinkModal";
 
 // 모달 상태 관리
 function GlobalModal() {
@@ -11,12 +13,17 @@ function GlobalModal() {
     // 없으면 아무것도 안그리기
     if (!modal) return null;
 
-    // 로그인 모달로 이동
+    let modalContent;
+
+    // 각 모달 상태 변경 시 모달 이동
     if (modal === "signup") {
-        return <RegisterModal openModal={openModal} />;
-    }
-    if (modal === "login") {
-        return <LoginModal onClose={closeModal} />;
+        modalContent = <RegisterModal openModal={openModal} />;
+    } else if (modal === "login") {
+        modalContent = <LoginModal onClose={closeModal}/>;
+    } else if (modal === "profileEdit") {
+        modalContent = <ProfileEditModal />;
+    } else if (modal === "socialLink") {
+        modalContent = <SocialLinkModal />;
     }
 
     return (
@@ -34,9 +41,9 @@ function GlobalModal() {
         }}>
             {/* 테스트용 박스 */}
             <div style={{ backgroundColor: "white", padding: "20px", borderRadius: "8px" }}>
-                {modalContent}
                 {/* 닫기 버튼 임시 추가 */}
-                <button onClick={closeModal}>닫기 X</button>
+                <button onClick={closeModal}>X</button>
+                {modalContent}
             </div>
         </div>
     );
