@@ -5,6 +5,8 @@ import GlobalModal from "./components/common/GlobalModal";
 import ProtectedRoute from './components/common/ProtectedRoute';
 import MyPage from './pages/MyPage';
 import OAuthSuccess from './pages/OAuthSuccess';
+import MyOmamoriSection from './components/omamori/MyOmamoriSection';
+import OmamoriCreate from './pages/OmamoriCreate'
 
 function App() {
   return (
@@ -12,19 +14,26 @@ function App() {
       <GlobalModal />
 
       <Routes>
-        {/* 주소가 / 이면 Main페이지 컴포넌트 실행 */}
         <Route path="/" element={<Main />} />
-
-        {/* 구글 계정 로그인 */}
         <Route path="/oauth/callback" element={<OAuthSuccess />} />
 
-        {/* 마이페이지 실행 */}
         <Route path="/mypage" element={
           <ProtectedRoute>
             <MyPage />
           </ProtectedRoute>
           }
-        />   
+        >
+          <Route index element={<MyOmamoriSection />} /> 
+          {/* <Route path="posts" element={<MyPostsSection />} />
+          <Route path="bookmarks" element={<MyBookmarksSection />} /> */}
+        </Route>
+
+        <Route path="/omamori/create" element={
+          <ProtectedRoute>
+            <OmamoriCreate />
+          </ProtectedRoute>
+          }
+        />
 
       </Routes>
     </>
