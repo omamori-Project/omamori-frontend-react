@@ -4,12 +4,9 @@ import { useState } from "react";
 import { useModal } from "../components/hooks/useModal";
 import { deleteUser } from "../api/auth.api";
 import PasswordConfirm from "../components/auth/PasswordConfirm";
-import { useNavigate } from "react-router-dom";
+import { Outlet, useNavigate, NavLink } from "react-router-dom";
 
 export default function MyPage() {
-    // 탭 상태 관리 ("omamori" | "posts" | "bookmarks")
-    const [activeTab, setActiveTab] = useState("omamori");
-
     const [step, setStep] = useState("default");
     const { user, logout } = useAuth();
     const navigate = useNavigate();
@@ -63,24 +60,43 @@ export default function MyPage() {
 
             <hr />
 
-            {/* 메뉴 영역 */}
+            {/* 메뉴 탭 영역 */}
             <nav>
-                <button onClick={() => setActiveTab("omamori")}>
-                    {activeTab === "omamori" ? "★ 내 오마모리" : "내 오마모리"}
-                </button>
-                <button onClick={() => setActiveTab("posts")}>
-                    {activeTab === "posts" ? "★ 작성 글" : "작성 글"}
-                </button>
-                <button onClick={() => setActiveTab("bookmarks")}>
-                    {activeTab === "bookmarks" ? "★ 북마크" : "북마크"}
-                </button>
+                <NavLink to="" end>
+                    {({ isActive }) =>
+                        isActive ? "★ 내 오마모리" : "내 오마모리"
+                    }
+                </NavLink>
+
+                {/* 확장 */}
+                {/* 
+                <NavLink to="posts">
+                    {({ isActive }) =>
+                        isActive ? "★ 작성 글" : "작성 글"
+                    }
+                </NavLink>
+
+                <NavLink to="bookmarks">
+                    {({ isActive }) =>
+                        isActive ? "★ 북마크" : "북마크"
+                    }
+                </NavLink>
+                */}
+            </nav>
+
+            <hr />
+
+            {/* 본문 영역 */}
+            <nav>
+                <Outlet />
             </nav>
 
             <hr />
 
             {/* 행운 컬러 보기 */}
             <section>
-                <button> 오늘의 행운 컬러 보기 </button>
+                <button onClick={() => openModal("fortune")}> 오늘의 행운 컬러 보기 </button>
+                <button onClick={() => navigate("/fortune-list")}> 전체 행운 컬러 목록 </button>
             </section>
 
         </div>

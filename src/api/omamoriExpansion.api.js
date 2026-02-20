@@ -1,8 +1,14 @@
 import axiosIns from "./axiosInstance.js";
 
+// 행운컬러 입력 기반 결과
+export const fortuneColorResult = async(birth) => {
+    const response = await axiosIns.post('/fortune-colors/today', birth);
+    return response.data;
+};
+
 // 행운컬러 목록
-export const fortuneColorList = async(page, size, category, keyword, sort) => {
-    const response = await axiosIns.get(`/fortune-colors?page=${page}&size=${size}&category=${category}&keyword=${keyword}&sort=${sort}`);
+export const fortuneColorList = async(page, size, isActive) => {
+    const response = await axiosIns.get(`/fortune-colors?page=${page}&size=${size}&isActive=${isActive}`);
     return response.data;
 };
 
@@ -12,15 +18,9 @@ export const fortuneColorDetails = async(fortuneColorId) => {
     return response.data;
 };
 
-// 행운컬러 입력 기반 결과
-export const fortuneColorResult = async(birth) => {
-    const response = await axiosIns.get(`/fortune-colors/result?birth=${birth}`);
-    return response.data;
-};
-
 // 오마모리에 컬러 적용
-export const fortuneColor = async(omamoriId, omamoriData) => {
-    const response = await axiosIns.post(`/fortune-colors/${omamoriId}/apply-fortune-color`, omamoriData);
+export const fortuneColor = async(id) => {
+    const response = await axiosIns.patch(`/me/theme`, id);
     return response.data;
 };
 

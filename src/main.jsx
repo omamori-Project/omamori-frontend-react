@@ -5,13 +5,16 @@ import App from './App.jsx'
 import { BrowserRouter } from 'react-router-dom'
 import { ModalProvider } from "./context/ModalContext";
 import { AuthProvider } from './context/AuthContext.jsx'
+import { FortuneProvider } from './context/FortuneContext.jsx'
 
 createRoot(document.getElementById('root')).render(
   <StrictMode>
     <BrowserRouter>
       <ModalProvider>
         <AuthProvider>
-          <App />
+          <FortuneProvider>
+            <App />
+          </FortuneProvider>
         </AuthProvider>
       </ModalProvider>
     </BrowserRouter>

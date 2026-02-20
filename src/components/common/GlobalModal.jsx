@@ -5,10 +5,12 @@ import RegisterModal from "../modals/RegisterModal";
 import LoginModal from "../modals/LoginModal";
 import ProfileEditModal from "../modals/ProfileEditModal";
 import SocialLinkModal from "../modals/SocialLinkModal";
+import BirthDayModal from "../modals/BirthDayModal";
+import FortuneDetailModal from "../modals/FortuneDetailModal";
 
 // 모달 상태 관리
 function GlobalModal() {
-    const { modal, closeModal, openModal} = useModal();
+    const { modal, closeModal, openModal, modalData } = useModal();
 
     // 없으면 아무것도 안그리기
     if (!modal) return null;
@@ -24,6 +26,10 @@ function GlobalModal() {
         modalContent = <ProfileEditModal />;
     } else if (modal === "socialLink") {
         modalContent = <SocialLinkModal />;
+    } else if (modal === "fortune") {
+        modalContent = <BirthDayModal />;
+    } else if (modal === "fortuneDetail") {
+        modalContent = <FortuneDetailModal colorId={modalData.id}/>;
     }
 
     return (
