@@ -95,7 +95,8 @@ export default function MyPage() {
 
             {/* 행운 컬러 보기 */}
             <section>
-                <button> 오늘의 행운 컬러 보기 </button>
+                <button onClick={() => openModal("fortune")}> 오늘의 행운 컬러 보기 </button>
+                <button onClick={() => navigate("/fortune-list")}> 전체 행운 컬러 목록 </button>
             </section>
 
         </div>

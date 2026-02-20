@@ -7,11 +7,14 @@ import MyPage from './pages/MyPage';
 import OAuthSuccess from './pages/OAuthSuccess';
 import MyOmamoriSection from './components/omamori/MyOmamoriSection';
 import OmamoriCreate from './pages/OmamoriCreate'
+import FortuneListPage from './pages/FortuneListPage';
+
 
 function App() {
   return (
     <>
       <GlobalModal />
+      
 
       <Routes>
         <Route path="/" element={<Main />} />
@@ -34,6 +37,13 @@ function App() {
           </ProtectedRoute>
           }
         />
+
+        <Route path="/fortune-list" element={
+          <ProtectedRoute>
+            <FortuneListPage />
+          </ProtectedRoute>
+          }
+        />   
 
       </Routes>
     </>

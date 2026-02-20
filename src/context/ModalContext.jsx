@@ -8,16 +8,23 @@ export function ModalProvider({ children }) {
 
     // ModalProvider의 모달
     const [modal, setModal] = useState(null);
+    const [modalData, setModalData] = useState(null);
 
     // type으로 모달 활성화
-    const openModal = (type) => setModal(type);
+    const openModal = (type, data = null) => {
+      setModal(type);
+      setModalData(data);
+    };
 
     // 모달 비활성화
-    const closeModal = () => setModal(null);
+    const closeModal = () => {
+      setModal(null)
+      setModalData(null);
+    };
 
     // 반환
     return (
-    <ModalContext.Provider value={{ modal, openModal, closeModal }}>
+    <ModalContext.Provider value={{ modal, openModal, closeModal, modalData }}>
       {children}
     </ModalContext.Provider>
   );
