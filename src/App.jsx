@@ -5,11 +5,13 @@ import GlobalModal from "./components/common/GlobalModal";
 import ProtectedRoute from './components/common/ProtectedRoute';
 import MyPage from './pages/MyPage';
 import OAuthSuccess from './pages/OAuthSuccess';
+import FortuneListPage from './pages/FortuneListPage';
 
 function App() {
   return (
     <>
       <GlobalModal />
+      
 
       <Routes>
         {/* 주소가 / 이면 Main페이지 컴포넌트 실행 */}
@@ -22,6 +24,13 @@ function App() {
         <Route path="/mypage" element={
           <ProtectedRoute>
             <MyPage />
+          </ProtectedRoute>
+          }
+        />   
+
+        <Route path="/fortune-list" element={
+          <ProtectedRoute>
+            <FortuneListPage />
           </ProtectedRoute>
           }
         />   
