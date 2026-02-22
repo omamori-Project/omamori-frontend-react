@@ -20,7 +20,7 @@ export const getOmamori = async(omamoriId) => {
 }
 
 // 오마모리 목록 조회
-export const omamoriList = async(status, page, size, sort) => {
+export const omamoriList = async(status, page, size, sort="latest") => {
     const response = await axiosIns.get(`/omamoris?status=${status}&page=${page}&size=${size}&sort=${sort}`);
     return response.data;
 }
