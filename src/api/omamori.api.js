@@ -20,8 +20,8 @@ export const getOmamori = async(omamoriId) => {
 }
 
 // 오마모리 목록 조회
-export const omamoriList = async(status, page, size, sort) => {
-    const response = await axiosIns.get(`/omamoris?status=${status}&page=${page}&size=${size}&sort=${sort}`);
+export const omamoriList = async() => {
+    const response = await axiosIns.get(`/omamoris`);
     return response.data;
 }
 
@@ -51,8 +51,8 @@ export const addOmamoriElement = async(omamoriId, textData) => {
 
 // 요소 재정렬
 export const omamoriElementRender = async(omamoriId, omamoriData) => {
-    const response = await axiosIns.post(`/omamoris/${omamoriId}/elements/render`, omamoriData);
-    return response.data;
+    await axiosIns.post(`/omamoris/${omamoriId}/elements/reorder`, omamoriData);
+    return true;
 } 
 
 // 요소 수정
@@ -77,10 +77,4 @@ export const omamoriSaveDraft = async(omamoriId) => {
 export const omamoriSave = async(omamoriId) => {
     const response = await axiosIns.post(`omamoris/${omamoriId}/publish`);
     return response.data;
-}
-
-// 레이어 순서 변경
-export const omamoriLayerReorder = async(omamoriId, elementId) => {
-    await axiosIns.post(`omamoris/${omamoriId}/elements/reorder`, elementId);
-    return true;
 }
