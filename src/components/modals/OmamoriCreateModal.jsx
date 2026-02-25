@@ -2,7 +2,7 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { omamori } from "../../api/omamori.api";
 
-export default function OmamoriCreateModal() {
+export default function OmamoriCreateModal({ onClose }) {
     const [userTitle, setUserTitle] = useState("");
     const navigate = useNavigate();
 
@@ -16,6 +16,8 @@ export default function OmamoriCreateModal() {
 
             // 오마모리 제작 이동
             navigate(`/omamori/edit/${newId}`);
+
+            onClose();
         } catch (error) {
         alert("제작 중 오류가 발생했습니다.");
         }
