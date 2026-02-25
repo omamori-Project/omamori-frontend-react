@@ -6,7 +6,6 @@ import ProtectedRoute from './components/common/ProtectedRoute';
 import MyPage from './pages/MyPage';
 import OAuthSuccess from './pages/OAuthSuccess';
 import MyOmamoriSection from './components/omamori/MyOmamoriSection';
-import OmamoriCreate from './pages/OmamoriCreate'
 import FortuneListPage from './pages/FortuneListPage';
 import OmamoriEdit from './pages/OmamoriEdit';
 
@@ -30,13 +29,6 @@ function App() {
           {/* <Route path="posts" element={<MyPostsSection />} />
           <Route path="bookmarks" element={<MyBookmarksSection />} /> */}
         </Route>
-
-        <Route path="/omamori/create" element={
-          <ProtectedRoute>
-            <OmamoriCreate />
-          </ProtectedRoute>
-          }
-        />
 
         <Route path="/omamori/edit/:id" element={ 
           <ProtectedRoute>
