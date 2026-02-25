@@ -2,7 +2,7 @@
 import { useParams } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import { getOmamori, omamoriElementUpdate, omamoriElementRender } from '../api/omamori.api';
-import { updateOmamori } from '../api/omamori.api';
+import { updateOmamori, omamoriSave } from '../api/omamori.api';
 import { useNavigate } from 'react-router-dom';
 import SelectionBoard from '../components/omamori/SelectionBoard';
 import { addOmamoriElement } from '../api/omamori.api';
@@ -222,6 +222,22 @@ export default function OmamoriEdit() {
         }
     };
 
+    // 최종 저장 함수
+    const handlePublish = async () => {
+    try {
+        const response = await omamoriSave(id);
+        alert("최종 저장 완료되었습니다.");
+
+        console.log(response);
+
+        // 여기에 이미지 저장 로직을 추가해주세요!
+        // ***
+
+    } catch (error) {
+        console.error(error);
+    }
+    };
+
   return (
     <>
         {/* 제목 영역 */}
@@ -263,7 +279,7 @@ export default function OmamoriEdit() {
 
         {/* ===== 하단 액션 버튼 ===== */}
         <div>
-            <button type="button">최종저장</button>
+            <button type="button" onClick={handlePublish}>최종저장</button>
             <button type="button" onClick={() => openModal("backMessage", {layer : layers.find(l => l.type === "frame"), omamoriId : id, setLayers : setLayers})}>뒷면 메세지 입력하기</button>
             <button type="button">공유</button>
         </div>
