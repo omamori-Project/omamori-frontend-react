@@ -31,14 +31,26 @@ export const fortuneColordel = async(omamoriId) => {
 };
 
 // 유저용 프레임 목록
-export const frameList = async(isActive, page, size) => {
-    const response = await axiosIns.get(`/frames?isActive=${isActive}&page=${page}&size=${size}`);
+export const frameList = async() => {
+    const response = await axiosIns.get('/frames');
     return response.data;
 };
 
 // 프레임 적용
 export const frames = async(omamoriId, frameKey) => {
-    const response = await axiosIns.post(`/omamoris/${omamoriId}/apply-frame`, frameKey);
+    const response = await axiosIns.post(`/omamoris/${omamoriId}/frame`, frameKey);
+    return response.data;
+};
+
+// 프레임 삭제
+export const userFrameDel = async(omamoriId) => {
+    await axiosIns.delete(`/omamoris/${omamoriId}/frame`);
+    return true;
+};
+
+// 스탬프 목록
+export const stamps = async() => {
+    const response = await axiosIns.get(`/stamps`);
     return response.data;
 };
 
