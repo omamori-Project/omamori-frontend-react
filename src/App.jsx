@@ -7,7 +7,9 @@ import GlobalModal from "./components/common/GlobalModal";
 import ProtectedRoute from './components/common/ProtectedRoute';
 import MyPage from './pages/MyPage';
 import OAuthSuccess from './pages/OAuthSuccess';
+import MyOmamoriSection from './components/omamori/MyOmamoriSection';
 import FortuneListPage from './pages/FortuneListPage';
+import OmamoriEdit from './pages/OmamoriEdit';
 
 function App() {
   return (
@@ -16,19 +18,33 @@ function App() {
       
 
       <Routes>
-        {/* 주소가 / 이면 Main페이지 컴포넌트 실행 */}
         <Route path="/" element={<Main />} />
-
-        {/* 구글 계정 로그인 */}
         <Route path="/oauth/callback" element={<OAuthSuccess />} />
 
-        {/* 마이페이지 실행 */}
         <Route path="/mypage" element={
           <ProtectedRoute>
             <MyPage />
           </ProtectedRoute>
           }
-        />   
+        >
+          <Route index element={<MyOmamoriSection />} /> 
+          {/* <Route path="posts" element={<MyPostsSection />} />
+          <Route path="bookmarks" element={<MyBookmarksSection />} /> */}
+        </Route>
+
+        <Route path="/omamori/edit/:id" element={ 
+          <ProtectedRoute>
+            <OmamoriEdit /> 
+          </ProtectedRoute>
+        }
+      />
+{/* 
+        <Route path="/omamori/edit/:id" element={
+          <ProtectedRoute>
+            <OmamoriCreate />
+          </ProtectedRoute>
+          }
+        /> */}
 
         <Route path="/fortune-list" element={
           <ProtectedRoute>
