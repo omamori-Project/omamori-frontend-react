@@ -1,8 +1,6 @@
-// src/pages/Main.jsx
-
 import { useModal } from "../components/hooks/useModal";
 import { useAuth } from "../context/AuthContext";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 
 function Main() {
   const navigate = useNavigate();
@@ -27,16 +25,16 @@ function Main() {
         <div>
           <button>오마모리 만들기</button>
           {isLoggedIn ? (
-          <>
-            <p>{user?.name}님, 환영합니다!</p>
-            <button onClick={() => navigate("/mypage")}>마이페이지</button>
-            <button onClick={handleLogout}>로그아웃</button>
-          </>
+            <>
+              <p>{user?.name}님, 환영합니다!</p>
+              <button onClick={() => navigate("/mypage")}>마이페이지</button>
+              <button onClick={handleLogout}>로그아웃</button>
+            </>
           ) : (
-          <>
-            <button onClick={() => openModal("signup")}>회원가입</button>
-            <button onClick={() => openModal("login")}>로그인</button>
-          </>
+            <>
+              <button onClick={() => openModal("signup")}>회원가입</button>
+              <button onClick={() => openModal("login")}>로그인</button>
+            </>
           )}
         </div>
       </section>
@@ -95,7 +93,7 @@ function Main() {
           <div>오마모리 카드 6</div>
         </div>
 
-        <button>게시판 더보기</button>
+        <button onClick={() => navigate("/community")}>게시판 더보기</button>
       </section>
 
       {/* Footer */}
@@ -103,14 +101,13 @@ function Main() {
         <p>© 2026 Omamori Project</p>
 
         <div>
-          <a href="/about">서비스 소개</a>
-          <a href="/board">게시판</a>
-          <a href="/mypage">마이페이지</a>
+          <Link to="/about">서비스 소개</Link>
+          <Link to="/community">게시판</Link>
+          <Link to="/mypage">마이페이지</Link>
         </div>
       </footer>
     </div>
   );
 }
 
-
-export default Main; 
+export default Main;

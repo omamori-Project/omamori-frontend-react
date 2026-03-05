@@ -1,6 +1,6 @@
 import './App.css'
-import PostDetail from "./pages/PostDetail";
-import CommunityList from './pages/CommunityList.jsx';
+import CommunityList from './pages/CommunityList';
+import PostDetail from './pages/PostDetail';
 import { Routes, Route } from 'react-router-dom';
 import Main from './pages/Main';
 import GlobalModal from "./components/common/GlobalModal";
@@ -10,50 +10,59 @@ import OAuthSuccess from './pages/OAuthSuccess';
 import MyOmamoriSection from './components/omamori/MyOmamoriSection';
 import FortuneListPage from './pages/FortuneListPage';
 import OmamoriEdit from './pages/OmamoriEdit';
+import SharedOmamori from './pages/SharedOmamori';
 
 function App() {
   return (
     <>
       <GlobalModal />
-      
 
       <Routes>
         <Route path="/" element={<Main />} />
         <Route path="/oauth/callback" element={<OAuthSuccess />} />
+        <Route path="/public/shares/:token" element={<SharedOmamori />} />
 
-        <Route path="/mypage" element={
-          <ProtectedRoute>
-            <MyPage />
-          </ProtectedRoute>
+        <Route
+          path="/mypage"
+          element={
+            <ProtectedRoute>
+              <MyPage />
+            </ProtectedRoute>
           }
         >
-          <Route index element={<MyOmamoriSection />} /> 
+          <Route index element={<MyOmamoriSection />} />
           {/* <Route path="posts" element={<MyPostsSection />} />
           <Route path="bookmarks" element={<MyBookmarksSection />} /> */}
         </Route>
 
-        <Route path="/omamori/edit/:id" element={ 
-          <ProtectedRoute>
-            <OmamoriEdit /> 
-          </ProtectedRoute>
-        }
-      />
-{/* 
+        <Route
+          path="/omamori/edit/:id"
+          element={
+            <ProtectedRoute>
+              <OmamoriEdit />
+            </ProtectedRoute>
+          }
+        />
+
+        {/* 
         <Route path="/omamori/edit/:id" element={
           <ProtectedRoute>
             <OmamoriCreate />
           </ProtectedRoute>
-          }
-        /> */}
+        } /> 
+        */}
 
-        <Route path="/fortune-list" element={
-          <ProtectedRoute>
-            <FortuneListPage />
-          </ProtectedRoute>
+        <Route
+          path="/fortune-list"
+          element={
+            <ProtectedRoute>
+              <FortuneListPage />
+            </ProtectedRoute>
           }
-        />   
+        />
+
         <Route path="/community" element={<CommunityList />} />
-        <Route path="/community/:id" element={<PostDetail />} />
+        <Route path="/community/:postId" element={<PostDetail />} />
       </Routes>
     </>
   );

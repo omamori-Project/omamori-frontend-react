@@ -1,9 +1,9 @@
 import { useNavigate } from "react-router-dom";
 import { IMAGES } from "../../constants/images";
 import { useEffect, useState } from "react";
-import { omamoriList } from "../../api/omamori.api";
+import { omamoriList, updateOmamori } from "../../api/omamori.api";
+import { createShareLink, getMyShareLinks, deleteShareLink } from "../../api/sharing.api";
 import { useModal } from "../hooks/useModal";
-import { updateOmamori } from "../../api/omamori.api";
 
 export default function MyOmamoriSection() {
     const navigate = useNavigate();
@@ -11,20 +11,50 @@ export default function MyOmamoriSection() {
 
     const [title, setTitle] = useState("제목을 입력하세요");
     const [editingId, setEditingId] = useState(null);
-
-    // 오마모리 수 관리 
     const [omamoris, setOmamoris] = useState([]);
+    const [shares, setShares] = useState({}); // { omamoriId: [shares] }
 
-    useEffect(() => {
-        (async () => {
+    const fetchOmamoris = async () => {
         try {
             const response = await omamoriList();
             setOmamoris(response.data || []);
         } catch (error) {
             console.error("목록을 불러오는 중 에러 발생:", error);
         }
-        })();
+    };
+
+    useEffect(() => {
+        fetchOmamoris();
     }, []);
+
+    const fetchShares = async (omamoriId) => {
+        try {
+            const res = await getMyShareLinks(omamoriId);
+            setShares(prev => ({ ...prev, [omamoriId]: res.data }));
+        } catch (err) {
+            console.error("공유 목록 조회 실패:", err);
+        }
+    };
+
+    const handleCreateShare = async (omamoriId) => {
+        try {
+            await createShareLink(omamoriId, { option: "A" });
+            alert("공유 링크가 생성되었습니다.");
+            fetchShares(omamoriId);
+        } catch (err) {
+            alert("링크 생성 실패");
+        }
+    };
+
+    const handleDeleteShare = async (omamoriId, shareId) => {
+        if (!window.confirm("공유 링크를 삭제하시겠습니까?")) return;
+        try {
+            await deleteShareLink(shareId);
+            fetchShares(omamoriId);
+        } catch (err) {
+            alert("삭제 실패");
+        }
+    };
 
     // 타이틀 수정
     const handleSubmit = async(e, id) => {
@@ -89,6 +119,22 @@ export default function MyOmamoriSection() {
                         }}>
                         수정
                         </p>
+                        <button onClick={() => handleCreateShare(omamori.id)}>공유 링크 생성</button>
+                        <button onClick={() => fetchShares(omamori.id)}>공유 목록 확인</button>
+                        
+                        {/* 공유 링크 목록 노출 */}
+                        {shares[omamori.id] && (
+                            <ul style={{ fontSize: "12px", background: "#f0f0f0", padding: "10px" }}>
+                                {shares[omamori.id].map(s => (
+                                    <li key={s.id}>
+                                        <a href={`/public/shares/${s.token}`} target="_blank" rel="noreferrer">
+                                            {s.token.substring(0, 8)}...
+                                        </a>
+                                        <button onClick={() => handleDeleteShare(omamori.id, s.id)} style={{ marginLeft: "5px" }}>삭제</button>
+                                    </li>
+                                ))}
+                            </ul>
+                        )}
                   </div>
                 )}
               </div>

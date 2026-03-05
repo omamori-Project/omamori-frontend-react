@@ -105,11 +105,9 @@ export const getComments = async (postId, page = 1, size = 10) => {
   return res.data;
 };
 
-// 내 댓글 목록
-export const getMyComments = async (page = 1, size = 10, sort = "latest", type = "comment", postId = null) => {
-  let url = `/me/comments?page=${page}&size=${size}&sort=${sort}&type=${type}`;
-  if (postId) url += `&postId=${postId}`;
-  const res = await axiosIns.get(url);
+// 내 댓글/답글 목록
+export const getMyComments = async (page = 1, size = 10, sort = "latest") => {
+  const res = await axiosIns.get(`/me/comments?page=${page}&size=${size}&sort=${sort}`);
   return res.data;
 };
 
