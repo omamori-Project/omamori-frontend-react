@@ -1,4 +1,6 @@
 import './App.css'
+import PostDetail from "./pages/PostDetail";
+import CommunityList from './pages/CommunityList.jsx';
 import { Routes, Route } from 'react-router-dom';
 import Main from './pages/Main';
 import GlobalModal from "./components/common/GlobalModal";
@@ -50,7 +52,8 @@ function App() {
           </ProtectedRoute>
           }
         />   
-
+        <Route path="/community" element={<CommunityList />} />
+        <Route path="/community/:id" element={<PostDetail />} />
       </Routes>
     </>
   );
